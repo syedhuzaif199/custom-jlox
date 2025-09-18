@@ -1,0 +1,84 @@
+Grammar with precedence
+
+expression      ->  comma
+
+comma           ->  conditional ( "," conditional)*
+
+conditional     -> equality "?" conditional ":" conditional | equality;
+
+equality        ->  comparison ( ( "==" | "!=" ) comparison)* ;
+
+comparison      ->  term ( ( "<" | "<=" | ">" | ">=" ) term)* ;
+
+term            ->  factor ( ( "+" | "-" ) factor )* ;
+
+factor          ->  unary ( ( "/" | "*" ) unary )* ;
+
+unary           ->  ( "!" | "-" ) unary
+                 |  primary  ;
+
+primary         ->  NUMBER | STRING | "true" | "false" | "nil" 
+                 |  "(" expression ")" ;
+
+- How to derive `true ? "hello" : true ? "hey" : "hi"`
+expression
+    => comma
+    => conditional
+    => equality ? conditional : conditional
+    => ... // steps to derive primary from equality
+    => primary ? conditional : conditional
+    => true ? conditional : conditional
+    => true ? equality : conditional
+    => ... // steps to derive primary from equality
+    => true ? primary : conditional
+    => true ? STRING : conditional
+    => true ? STRING : equality ? conditional : conditional
+    => ... // steps to derive primary from equality
+    => true ? STRING : primary ? conditional : conditional
+    => true ? STRING : true ? conditional : conditional
+    => true ? STRING : true ? equality : conditional
+    => ... // steps to derive primary from equality
+    => true ? STRING : true ? primary : conditional
+    => true ? STRING : true ? STRING : conditional
+    => true ? STRING : true ? STRING : equality
+    => ... // steps to derive primary from equality
+    => true ? STRING : true ? STRING : primary
+    => true ? STRING : true ? STRING : STRING
+    => true ? "hello" : true ? "hey" : "hi"
+
+
+- How to derive `true ? 1 == 2 ? "hello" : "yellow" : false ? "bellow" : "fellow"`
+expression
+    => conditional
+    => equality ? conditional : conditional
+    => ...
+    => primary ? conditional : conditional
+    => true ? conditional : conditional
+    => true ? equality ? conditional : conditional : conditional
+    => true ? comparison == comparison ? conditional : conditional : conditional
+    => ...
+    => true ? primary == comparison ? conditional : conditional : conditional
+    => true ? NUMBER  == comparison ? conditional : conditional : conditional
+    => ...
+    => true ? NUMBER  == primary ? conditional : conditional : conditional
+    => true ? NUMBER  == NUMBER ? conditional : conditional : conditional
+    => true ? NUMBER  == NUMBER ? equality : conditional : conditional
+    => ...
+    => true ? NUMBER  == NUMBER ? primary : conditional : conditional
+    => true ? NUMBER  == NUMBER ? STRING : conditional : conditional
+    => true ? NUMBER  == NUMBER ? STRING : equality : conditional
+    => ...
+    => true ? NUMBER  == NUMBER ? STRING : primary : conditional
+    => true ? NUMBER  == NUMBER ? STRING : STRING : conditional
+    => true ? NUMBER  == NUMBER ? STRING : STRING : equality ? conditional : conditional
+    => ...
+    => true ? NUMBER  == NUMBER ? STRING : STRING : primary ? conditional : conditional
+    => true ? NUMBER  == NUMBER ? STRING : STRING : false ? conditional : conditional
+    => true ? NUMBER  == NUMBER ? STRING : STRING : false ? equality : conditional
+    => ...
+    => true ? NUMBER  == NUMBER ? STRING : STRING : false ? primary : conditional
+    => true ? NUMBER  == NUMBER ? STRING : STRING : false ? STRING : equality
+    => ...
+    => true ? NUMBER  == NUMBER ? STRING : STRING : false ? STRING : primary
+    => true ? NUMBER  == NUMBER ? STRING : STRING : false ? STRING : STRING
+    => true ? 1 == 2 ? "hello": "yellow" : false ? "bellow" : "fellow"

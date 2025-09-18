@@ -1,0 +1,22 @@
+digraph G {
+node [shape=box];
+node1826771953 [label="?:"];
+node1406718218 [label="group"];
+node245257410 [label="?:"];
+node1705736037 [label="=="];
+node455659002 [label="1.0"];
+node250421012 [label="2.0"];
+node1705736037 -> node455659002;
+node1705736037 -> node250421012;
+node1915318863 [label="true"];
+node1283928880 [label="false"];
+node245257410 -> node1705736037;
+node245257410 -> node1915318863;
+node245257410 -> node1283928880;
+node1406718218 -> node245257410;
+node295530567 [label="a"];
+node2003749087 [label="b"];
+node1826771953 -> node1406718218;
+node1826771953 -> node295530567;
+node1826771953 -> node2003749087;
+}

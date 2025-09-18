@@ -15,24 +15,24 @@ class Parser {
 
     Expr parse() {
         try {
-            return comma();
+            return expression();
         } catch (ParseError e) {
             return null;
         }
     }
 
+    private Expr expression() {
+        return comma();
+    }
+
     private Expr comma() {
-        Expr expr =expression();
+        Expr expr = equality();
         while(match(COMMA)) {
             Token operator = previous();
-            Expr right = expression();
+            Expr right = equality();
             expr = new Expr.Binary(expr, operator, right);
         }
         return expr;
-    }
-
-    private Expr expression() {
-        return equality();
     }
 
     private Expr equality() {

@@ -1,16 +1,10 @@
 digraph G {
 node [shape=box];
-node868693306 [label=","];
-node424058530 [label="+"];
-node321001045 [label="1.0"];
-node791452441 [label="2.0"];
-node424058530 -> node321001045;
-node424058530 -> node791452441;
-node834600351 [label="*"];
-node471910020 [label="3.0"];
-node531885035 [label="4.0"];
-node834600351 -> node471910020;
-node834600351 -> node531885035;
-node868693306 -> node424058530;
-node868693306 -> node834600351;
+node1746572565 [label="group"];
+node321001045 [label=","];
+node791452441 [label="1.0"];
+node834600351 [label="2.0"];
+node321001045 -> node791452441;
+node321001045 -> node834600351;
+node1746572565 -> node321001045;
 }

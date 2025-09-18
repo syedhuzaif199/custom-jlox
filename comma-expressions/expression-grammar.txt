@@ -35,9 +35,9 @@ expression
 
 Revised Grammar for precedence (with comma operator)
 
-comma           ->  expression ( "," expression )*
+expression      ->  comma
 
-expression      ->  equality
+comma           ->  equality ( "," equality)*
 
 equality        ->  comparison ( ( "==" | "!=" ) comparison)* ;
 

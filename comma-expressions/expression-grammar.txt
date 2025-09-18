@@ -1,0 +1,54 @@
+Productions:
+expression  ->  literal
+             |  unary
+             |  binary
+             |  grouping ;
+
+literal     ->  NUMBER | STRING | "true" | "false" | "nil" ;
+
+grouping    ->  "(" expression ")"  ;
+
+unary       ->  ("-" | "!") expression  ;
+
+binary      ->  expression operator expression  ;
+
+operator    ->  "==" | "!=" | "<" | "<=" | ">" | ">="
+             |  "+"  | "-"  | "*" | "/" ;
+
+
+Example derivations:
+
+1. 1 + -3
+
+expression
+    => binary
+    => expression operator expression
+    => literal operator expression
+    => "1" operator expression
+    => "1" "+" expression
+    => "1" "+" unary
+    => "1" "+" "-" expression
+    => "1" "+" "-" literal
+    => "1" "+" "-" "3"
+
+********************************************
+
+Revised Grammar for precedence (with comma operator)
+
+comma           ->  expression ( "," expression )*
+
+expression      ->  equality
+
+equality        ->  comparison ( ( "==" | "!=" ) comparison)* ;
+
+comparison      ->  term ( ( "<" | "<=" | ">" | ">=" ) term)* ;
+
+term            ->  factor ( ( "+" | "-" ) factor )* ;
+
+factor          ->  unary ( ( "/" | "*" ) unary )* ;
+
+unary           ->  ( "!" | "-" ) unary
+                 |  primary  ;
+
+primary         ->  NUMBER | STRING | "true" | "false" | "nil" 
+                 |  "(" expression ")" ;

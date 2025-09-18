@@ -1,0 +1,14 @@
+digraph G {
+node [shape=box];
+node636718812 [label="!="];
+node445051633 [label="=="];
+node1051754451 [label="0.0"];
+node1349277854 [label="0.0"];
+node445051633 -> node1051754451;
+node445051633 -> node1349277854;
+node1775282465 [label="group"];
+node1147985808 [label="nil"];
+node1775282465 -> node1147985808;
+node636718812 -> node445051633;
+node636718812 -> node1775282465;
+}
